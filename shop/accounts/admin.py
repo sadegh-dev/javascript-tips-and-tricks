@@ -14,20 +14,20 @@ class UserAdmin(BaseUserAdmin):
     
     form = UserChangeForm
     fieldsets = (
-        (None, {'field':('full_name','email','password')}) ,
-        ('Status', {'field':('is_active',)}) ,
-        ('Permissions', {'field':('is_admin',)}) ,
+        (None, {'fields':('full_name','email','password')}) ,
+        ('Status', {'fields':('is_active',)}) ,
+        ('Permissions', {'fields':('is_admin',)}) ,
     )
 
     add_form = UserCreationForm
-    fieldsets = (
-        (None, {'field':('full_name','email','password1','password2')}) ,
+    add_fieldsets = (
+        (None, {'fields':('full_name','email','password1','password2')}) ,
     )
 
 
 
 
-admin.site.register()
+admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)
 
 
