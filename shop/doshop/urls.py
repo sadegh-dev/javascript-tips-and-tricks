@@ -3,5 +3,6 @@ from . import views
 
 app_name = 'doshop'
 urlpatterns = [
-    path('',views.hello, name='home'),  
+    path('',views.home, name='home'),  
+    path('product/<slug:slug>/',views.product_detail, name='product-detail'),  
 ]
