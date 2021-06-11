@@ -7,6 +7,8 @@ class Category(models.Model):
 
     class Meta :
         ordering = ('name',)
+        verbose_name = 'category' #name class for one
+        verbose_name_plural = 'categories' #name class for all
 
     def __str__(self):
         return self.name
