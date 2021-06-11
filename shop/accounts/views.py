@@ -5,10 +5,6 @@ from django.contrib import messages
 from .models import User
 
 
-def hello(request) :
-    return render(request,'accounts/home.html')
-
-
 def user_register(request):
     if request.method == 'POST' :
         form = UserCreationForm(request.POST)
@@ -20,7 +16,7 @@ def user_register(request):
             user.save()
             login(request,user)
             messages.success(request, 'ثبت نام شما با موفقیت انجام شد','success')
-            return redirect('accounts:home')
+            return redirect('doshop:home')
     else :
         form = UserCreationForm()
     context = {
@@ -40,7 +36,7 @@ def user_login(request):
             if user is not None :
                 login(request,user)
                 messages.success(request,'شما با موفقیت وارد شدید','success')
-                return redirect('accounts:home')
+                return redirect('doshop:home')
             else :
                 messages.error(request,'ایمیل یا رمز عبور ورودی صحیحی نمی باشد','danger')
     else :
@@ -55,5 +51,5 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     messages.success(request,'شما با موفقیت از سیستم خارج شدید','success')
-    return redirect('accounts:home')
+    return redirect('doshop:home')
 
