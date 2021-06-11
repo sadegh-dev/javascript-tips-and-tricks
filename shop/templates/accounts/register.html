@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %} ایجاد حساب کاربری {% endblock %}
+{% block content %}
+    <h4> ایجاد حساب کاربری </h4>
+    <form action='' method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type='submit' class='btn btn-primary' value='ثبت'>
+    </form>
+{% endblock %}
