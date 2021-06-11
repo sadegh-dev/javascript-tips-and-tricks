@@ -1,13 +1,15 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Category, Product
+from .models import Category, Product, Company
 
 
 def home(request) :
     products = Product.objects.filter(available=True)
     categories = Category.objects.all()
+    companies = Company.objects.all()
     context = {
         'products' : products ,
-        'categories' : categories
+        'categories' : categories,
+        'companies' : companies ,
     }
     return render(request,'doshop/home.html', context)
 
@@ -30,3 +32,13 @@ def category_detail(request, slug):
         'categories' : categories
     }
     return render(request,'doshop/category_detail.html',context)
+
+
+def company_detail(request, slug):
+    company = get_object_or_404(Company, slug=slug)
+    companies = Company.objects.all()
+    context = {
+        'company' : company ,
+        'companies' : companies
+    }
+    return render(request,'doshop/company_detail.html',context)

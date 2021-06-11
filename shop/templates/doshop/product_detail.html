@@ -4,6 +4,10 @@
 {% block content %}
     {% include 'lib/categories.html' %}
     <h4> {{product.name}} </h4>
+    <p>
+        <a href='{{ product.company.get_absolute_url }}'>{{ product.company }}</a> |  
+        <a href='{{ product.category.get_absolute_url }}'>{{ product.category }}</a>
+    </p>
     <small>{{ product.updated }}</small><br >
     <img src='{{ product.image.url }}' alt='{{ product.name }}' width="300" heigth ='400'/>
     <p> تومان {{ product.price }}</p>

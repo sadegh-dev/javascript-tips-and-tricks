@@ -2,8 +2,8 @@
     <div class="container-fluid">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            {% for ct in categories %}
-                <li class="nav-item border bg-primary bg-gradient " style="margin-right:10px;">
+            {% for ct in companies %}
+                <li class="nav-item border bg-info bg-gradient" style="margin-right:10px;">
                     <a class="nav-link active text-light" aria-current="page" href="{{ ct.get_absolute_url }}">{{ ct.name }}</a>
                 </li>
             {% endfor %}
