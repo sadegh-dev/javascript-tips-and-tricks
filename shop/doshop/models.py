@@ -13,11 +13,32 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse ('doshop:category-detail', args=[self.slug,])
+
+
+
+class Company(models.Model):
+    name =      models.CharField(max_length=400)
+    slug =      models.SlugField(max_length=500, unique=True)
+
+    class Meta :
+        ordering = ('name',)
+        verbose_name = 'company' #name class for one
+        verbose_name_plural = 'companies' #name class for all
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse ('doshop:company-detail', args=[self.slug,])
 
 
 
 class Product(models.Model):
     category =      models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+    company =      models.ForeignKey(Company, on_delete=models.CASCADE, related_name='companies', null=True)
     name =          models.CharField(max_length=400)
     slug =          models.SlugField(max_length=500, unique=True)
     image =         models.ImageField(upload_to='products/%Y/%m/%d/')

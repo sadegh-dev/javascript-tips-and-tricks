@@ -2,6 +2,7 @@
 
 {% block title %} {{ product.name }}{% endblock %}
 {% block content %}
+    {% include 'lib/categories.html' %}
     <h4> {{product.name}} </h4>
     <small>{{ product.updated }}</small><br >
     <img src='{{ product.image.url }}' alt='{{ product.name }}' width="300" heigth ='400'/>
