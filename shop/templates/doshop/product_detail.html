@@ -3,6 +3,8 @@
 {% block content %}
     <h4> {{product.name}} </h4>
     <small>{{ product.updated }}</small><br >
-    <img src='{{ product.image.url }}' alt='{{ product.name }}'/>
+    <img src='{{ product.image.url }}' alt='{{ product.name }}' width="300" heigth ='400'/>
+    <p> تومان {{ product.price }}</p>
+    <p>{{ product.description }}</p>
     
 {% endblock %}
