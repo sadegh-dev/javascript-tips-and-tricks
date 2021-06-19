@@ -1,0 +1,10 @@
+{% extends 'base_accounts.html' %}
+{% block title %} تغییر رمز عبور {% endblock %}
+{% block content %}
+    <h4> تغییر رمز عبور </h4>
+    <form action='' method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type='submit' class='btn btn-primary' value='تغییر رمز'>
+    </form>
+{% endblock %}

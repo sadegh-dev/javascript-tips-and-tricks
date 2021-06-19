@@ -1,16 +1,50 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 
 {% block title %} {{ product.name }}{% endblock %}
 {% block content %}
-    {% include 'lib/categories.html' %}
-    <h4> {{product.name}} </h4>
-    <p>
-        <a href='{{ product.company.get_absolute_url }}'>{{ product.company }}</a> |  
-        <a href='{{ product.category.get_absolute_url }}'>{{ product.category }}</a>
-    </p>
-    <small>{{ product.updated }}</small><br >
-    <img src='{{ product.image.url }}' alt='{{ product.name }}' width="300" heigth ='400'/>
-    <p> تومان {{ product.price }}</p>
-    <p>{{ product.description }}</p>
-    
+    <!-- Section-->
+    <div class="col mb-5 w-50 p-3">
+        <div class="card h-100">
+            <!-- Sale badge-->
+            {% if product.specialـprice %}
+                <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">فروش ویژه</div>
+            {% endif %}
+                <!-- Product image-->
+            {% thumbnail product.image "500x500" as img %}
+            <a href='{{ product.get_absolute_url }}'><img class="card-img-top" src="{{ img.url }}" alt="{{ img.name }}" /></a>
+            {% endthumbnail %}
+            <!-- Product category and company-->
+            <p>
+                <a href='{{ product.company.get_absolute_url }}'>{{ product.company }}</a> |  
+                <a href='{{ product.category.get_absolute_url }}'>{{ product.category }}</a>
+            </p>
+            <!-- Product details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">{{ product.name }}</h5>
+                    <!-- Product price-->
+                    {% if product.specialـprice %}
+                        <span class="text-muted text-decoration-line-through">{{ product.price }}</span>
+                        {{ product.specialـprice }}
+                    {% else %}
+                        {{ product.price }}
+                    {% endif %}
+                </div>
+            </div>
+            <p dir='rtl' style='margin:1rem; text-align:justify; '>{{ product.description }}</p>
+            <!-- Product actions-->
+            <br />
+            <form action='{% url "cart:cart_add" product.id %}' method='POST'>
+                {% csrf_token %}
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div dir='rtl' class="text-center">{{ form.as_p }}</div>
+                </div>
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><input type='submit' class="btn btn-outline-dark mt-auto" value="اضافه به سبد خرید"></div>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

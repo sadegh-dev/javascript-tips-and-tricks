@@ -38,12 +38,14 @@ class Company(models.Model):
 
 class Product(models.Model):
     category =      models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
-    company =      models.ForeignKey(Company, on_delete=models.CASCADE, related_name='products', null=True)
+    company =       models.ForeignKey(Company, on_delete=models.CASCADE, related_name='products', null=True)
     name =          models.CharField(max_length=400)
     slug =          models.SlugField(max_length=500, unique=True)
     image =         models.ImageField(upload_to='products/%Y/%m/%d/')
     description =   models.TextField()
     price =         models.IntegerField()
+    number =        models.IntegerField(default=1)
+    specialـprice = models.IntegerField(null=True, blank=True)
     available =     models.BooleanField(default=True)
     created =       models.DateTimeField(auto_now_add=True)
     updated =       models.DateTimeField(auto_now=True)

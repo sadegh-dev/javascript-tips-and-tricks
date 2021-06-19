@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base_accounts.html' %}
 {% block title %} ایجاد حساب کاربری {% endblock %}
 {% block content %}
-    <h4> ایجاد حساب کاربری </h4>
+    <h4> ایجاد حساب کاربری جدید </h4>
     <form action='' method="POST">
         {% csrf_token %}
         {{ form.as_p }}

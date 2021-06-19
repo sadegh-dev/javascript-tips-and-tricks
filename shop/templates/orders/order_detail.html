@@ -1,0 +1,49 @@
+{% extends 'base_accounts.html' %}
+
+{% block title %}  {% endblock %}
+{% block content %}   
+    <!-- order obj -->
+    <!--#####################-->
+    <table dir='rtl' class="table table-striped ">
+        <thead class="bg-secondary text-white">
+        <tr>
+            <th scope="col">ردیف</th>
+            <th scope="col">نام کالا</th>
+            <th scope="col" class="text-center">قیمت واحد</th>
+            <th scope="col" class="text-center">تعداد</th>
+            <th scope="col" class="text-center">قیمت کل</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in order.items.all %}
+            <tr>
+                <th>{{ forloop.counter }}</th>
+                <!-- item has info of sessions not model -->
+                <td>{{ item.product.name }}</td>
+                <td class="text-center">{{ item.price }} تومان</td>
+                <td class="text-center">{{ item.number }}</td>
+                <td class="text-center">{{ item.get_cost }} تومان</td>
+            </tr>
+        {% endfor %}
+            <tr class='table-success'>
+                <th>+</th>
+                <th> مبلغ نهایی قابل پرداخت</th>
+                
+                <th class="text-center">{{ order.total_price }}  تومان</th>
+                <td colspan=1>
+                    {% if not order.paid %}
+                    <a href=" {% url 'orders:order_delete' order.id %} " type="button" class="btn btn-danger w-100 d-inline-block">حذف سفارش</a>
+                    {% endif %}
+                </td>
+                <td colspan=2>
+                    {% if order.paid %}
+                        <a type="button" class="btn btn-success w-100 d-inline-block">پرداخت شده است</a>
+                    {% else %}
+                        <a href="{% url 'zarinpal:payment' %}" type="button" class="btn btn-warning w-100 d-inline-block">پرداخت - اتصال به درگاه بانک</a>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %} 
