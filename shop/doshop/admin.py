@@ -17,7 +17,7 @@ class CompanyAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name','price','specialـprice','company','available') 
+    list_display = ('name','price','specialـprice','category','available') 
     list_filter  = ('available','created')
     list_editable = ('specialـprice',)
     raw_id_fields = ('category',)

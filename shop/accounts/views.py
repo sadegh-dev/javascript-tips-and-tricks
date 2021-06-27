@@ -17,7 +17,7 @@ def user_register(request):
             user.save()
             login(request, user)
             messages.success(request,'ثبت نام با موفقیت انجام شد','success')
-            return redirect('accounts:dashboard')
+            return redirect('doshop:home')
     else :
         form = UserRegisterForm()
     context = {
@@ -39,7 +39,7 @@ def user_login(request):
                 messages.success(request,'ورود با موفقیت انجام شد','success')
                 if next :
                     return redirect(next)
-                return redirect('accounts:dashboard')
+                return redirect('doshop:home')
             else :
                 messages.success(request,'ایمیل یا رمز عبور صحیح نمی باشد','danger')
     else :
@@ -68,13 +68,13 @@ def user_edit(request):
         if form.is_valid():
             form.save()
             messages.success(request,'ویرایش مشخصات با موفقیت انجام شد','success')
-            return redirect('accounts:dashboard')
+            return redirect('accounts:user_profile')
     else :
         form = UserChangeForm(instance=me)
     context = {
         'form' : form
     }
-    return redirect('doshop:home')
+    return render (request,'accounts/user_edit.html',context)
 
 
 
@@ -92,7 +92,7 @@ def user_profile(request):
 
 @login_required
 def user_change_pass(request):
-    user_id = reques.user.id
+    user_id = request.user.id
     the_user = get_object_or_404(User, id = user_id)
     if request.method == 'POST' :
         form = UserChangePassForm(request.POST, instance=the_user)
@@ -111,7 +111,7 @@ def user_change_pass(request):
 
 
 # ------------------------------------ #
-# Reset Password
+# Reset Password # Forget Password
 
 class UserPassReset(auth_views.PasswordResetView):
     template_name = 'accounts/password/password_reset_form.html'

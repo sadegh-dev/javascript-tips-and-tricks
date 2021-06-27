@@ -1,7 +1,7 @@
 {% extends 'base_accounts.html' %}
 {% block title %} ورود {% endblock %}
 {% block content %}
-    <h4> ورود </h4>
+    <h4> ورود به حساب کاربری </h4>
     <form action='' method="POST">
         {% csrf_token %}
         {{ form.as_p }}

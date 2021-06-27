@@ -49,14 +49,14 @@ class UserRegisterForm(forms.ModelForm):
         max_length = '20',
         label = 'رمز عبور' , 
         widget = forms.PasswordInput(attrs={
-            'class' :'form-control bg-light w-50'
+            'class' :'form-control bg-light'
         })
     )
     password2 = forms.CharField(
         max_length = '20',
         label = 'تکرار رمز عبور' , 
         widget = forms.PasswordInput(attrs={
-            'class' :'form-control bg-light w-50'
+            'class' :'form-control bg-light '
         })
     )
 
@@ -65,20 +65,20 @@ class UserRegisterForm(forms.ModelForm):
         fields = ('email', 'full_name', 'national_code', 'mobile', 'address')
         widgets = {
             'email':forms.TextInput(attrs={
-                'class' :'form-control bg-light w-50' ,
+                'class' :'form-control bg-light' ,
             }),
             'full_name':forms.TextInput(attrs={
-                'class' :'form-control bg-light w-50' ,
+                'class' :'form-control bg-light' ,
             }),
             'national_code':forms.TextInput(attrs={
-                'class' :'form-control bg-light w-50' ,
+                'class' :'form-control bg-light' ,
             }),
             'mobile':forms.TextInput(attrs={
                 'placeholder' : '09...' ,
-                'class' :'form-control bg-light w-50' ,
+                'class' :'form-control bg-light' ,
             }), 
             'address':forms.Textarea(attrs={
-                'class' :'form-control bg-light w-50' ,
+                'class' :'form-control bg-light' ,
             }),
         }
         labels = {
@@ -139,20 +139,20 @@ class UserChangeForm(forms.ModelForm):
         fields = ('email', 'full_name', 'national_code', 'mobile', 'address')
         widgets = {
             'email':forms.TextInput(attrs={
-                'class' :'form-control bg-light w-50' ,
+                'class' :'form-control bg-light' ,
             }),
             'full_name':forms.TextInput(attrs={
-                'class' :'form-control bg-light w-50' ,
+                'class' :'form-control bg-light' ,
             }),
             'national_code':forms.TextInput(attrs={
-                'class' :'form-control bg-light w-50' ,
+                'class' :'form-control bg-light' ,
             }),
             'mobile':forms.TextInput(attrs={
                 'placeholder' : '09...' ,
-                'class' :'form-control bg-light w-50' ,
+                'class' :'form-control bg-light' ,
             }), 
             'address':forms.Textarea(attrs={
-                'class' :'form-control bg-light w-50' ,
+                'class' :'form-control bg-light' ,
             }),
         }
         labels = {
@@ -196,13 +196,13 @@ class UserChangePassForm(forms.ModelForm):
     password1 = forms.CharField(
         label = 'رمز عبور',
         widget = forms.PasswordInput(attrs={
-            'class' :'form-control bg-light w-50' ,
+            'class' :'form-control bg-light' ,
         })
     )
     password2 = forms.CharField(
         label = 'تکرار رمز عبور',
         widget = forms.PasswordInput(attrs={
-            'class' :'form-control bg-light w-50' ,
+            'class' :'form-control bg-light' ,
         })
     )
     class Meta :
@@ -231,7 +231,7 @@ class UserLoginForm(forms.Form):
         required= True,
         label = 'ایمیل',
         widget= forms.EmailInput(attrs={
-            'class':'form-control bg-light w-50',
+            'class':'form-control bg-light',
             'placeholder' : 'your-email@email.com' ,
         }))
     password = forms.CharField(
@@ -239,7 +239,7 @@ class UserLoginForm(forms.Form):
         required= True,
         label = 'رمز عبور',
         widget= forms.PasswordInput(attrs={
-            'class':'form-control bg-light w-50',
+            'class':'form-control bg-light',
         }))
 
 

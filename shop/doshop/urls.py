@@ -8,5 +8,10 @@ urlpatterns = [
     path('company/<slug:slug>/',views.company_detail, name='company-detail'), 
     path('special-price/',views.all_specialـprice, name='special-price'),
     path('page-not-found/',views.page_not_found, name='page_not_found'),
+    #----- manager------------#
+    path('insert-product/',views.insert_product, name='insert_product'),
+    path('edit-product/<slug:slug>/',views.edit_product, name='edit_product'),
+    #------End manager -------#
     path('',views.home, name='home'),
+    
 ]

@@ -1,6 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Category, Product, Company
 from cart.forms import CartAddForm
+from .forms import InsertProductForm
 
 def home(request) :
     products = Product.objects.filter(available=True)
@@ -73,3 +76,55 @@ def page_not_found(request):
         'companies' : companies ,
     }
     return render(request,'doshop/404.html', context)
+
+
+
+# ---- Manager --------- # 
+@login_required
+def insert_product(request):
+    if request.user.access_level == 'o' :
+        if request.method=='POST':
+            form = InsertProductForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request,'ثبت کالای جدید با موفقیت انجام شد','success')
+                return redirect('doshop:home')
+        else :
+            form = InsertProductForm()
+        context = {
+            'form' : form
+        }
+        return render(request,'accounts/manager/insert_product.html',context)
+    else :
+        return redirect('doshop:home')
+
+
+
+@login_required
+def edit_product(request, slug):
+    if request.user.access_level == 'o' :
+        the_product = get_object_or_404(Product, slug=slug)
+        if request.method=='POST':
+            form = InsertProductForm(request.POST, request.FILES, instance=the_product)
+            if form.is_valid():
+                form.save()
+                messages.success(request,'ویرایش مشخصات کالا با موفقیت انجام شد','success')
+                return redirect('doshop:product-detail', slug )
+        else :
+            form = InsertProductForm(instance=the_product)
+        context = {
+            'form' : form ,
+        }
+        return render(request,'accounts/manager/edit_product.html',context)
+    else :
+        return redirect('doshop:home')
+
+
+
+
+
+
+
+
+
+# ---- EndManager ------ #

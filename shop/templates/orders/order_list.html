@@ -8,7 +8,6 @@
         <thead class="bg-secondary text-white">
         <tr>
             <th scope="col">ردیف</th>
-            <th scope="col"> شماره سفارش </th>
             <th scope="col" class="text-center">مبلغ سفارش</th>
             <th scope="col" class="text-center">تاریخ ثبت سفارش</th>
             <th scope="col" class="text-center">تاریخ پرداخت</th>
@@ -21,7 +20,6 @@
             <tr>
                 <th>{{ forloop.counter }}</th>
                 <!-- item has info of sessions not model -->
-                <td>{{ order.id }}</td>
                 <td class="text-center">{{ order.total_price|floatformat:"-3g"  }} تومان</td>
                 <td class="text-center">{{ order.created }}</td>
                 <td class="text-center text-success ">

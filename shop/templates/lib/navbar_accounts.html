@@ -9,19 +9,18 @@
               </ul>
             {% if user.is_authenticated %}
                 <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_profile' %}">پروفایل</a></div>
+                {% if user.access_level == 'o' %}
+                  <div class="btn mx-1 bg-danger"><a class="text-white me-1" style='text-decoration:none' href="{% url 'doshop:insert_product' %}">مدیریت</a></div>
+                {% endif %}
+                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_change_pass' %}">تغییر رمز عبور</a></div>
+                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_edit' %}">ویرایش مشخصات</a></div>
+                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'orders:order_list' %}">سفارشات ثبت شده</a></div>
                 <div class="btn btn-secondary mx-1"><a class="text-white me-1" style='text-decoration:none' href="{% url 'cart:cart_detail' %}">
                   <i class="bi-cart-fill me-1"></i>
                         سبد خرید
                 </a></div>
-                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_change_pass' %}">تغییر رمز عبور</a></div>
-                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_edit' %}">ویرایش مشخصات کاربری</a></div>
-                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'orders:order_list' %}">سفارشات ثبت شده</a></div>
                 <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_logout' %}">خروج</a></div>
-              {% else %}
-                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_register' %}">ایجاد حساب کاربری</a></div>
-                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_login' %}">ورود</a></div>
-              {% endif %}
-            
+            {% endif %}
         </div>
     </div>
   </nav>

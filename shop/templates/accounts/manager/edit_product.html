@@ -1,0 +1,10 @@
+{% extends 'base_manager.html' %}
+{% block title %} ورود {% endblock %}
+{% block content %}
+    <h4>ویرایش مشخصات کالا </h4>
+    <form enctype="multipart/form-data" action='' method="POST" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type='submit' class='btn btn-primary' value='ثبت ویرایش'>
+    </form>
+{% endblock %}

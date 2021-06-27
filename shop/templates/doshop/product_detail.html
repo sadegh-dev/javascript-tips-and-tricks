@@ -19,6 +19,11 @@
                 <a href='{{ product.company.get_absolute_url }}'>{{ product.company }}</a> |  
                 <a href='{{ product.category.get_absolute_url }}'>{{ product.category }}</a>
             </p>
+
+            {% if user.access_level == 'o' %}
+            <a href="{% url 'doshop:edit_product'  product.slug  %}" type="button" class="btn btn-danger col-5">ویرایش اطلاعات کالا</a>
+            {% endif %}
+            
             <!-- Product details-->
             <div class="card-body p-4">
                 <div class="text-center" dir=rtl>
