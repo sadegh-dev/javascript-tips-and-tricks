@@ -20,10 +20,14 @@
             <tr>
                 <th>{{ forloop.counter }}</th>
                 <!-- item has info of sessions not model -->
-                <td>{{ item.product.name }}</td>
-                <td class="text-center">{{ item.price }} تومان</td>
+                <td>{{ item.product.name }}
+                    {% if item.product.specialـprice %}
+                        <span dir='rtl' class="text-danger">- فروش ویژه</span>
+                    {% endif %}
+                </td>
+                <td class="text-center">{{ item.price|floatformat:"-3g"  }} تومان</td>
                 <td class="text-center">{{ item.number }}</td>
-                <td class="text-center">{{ item.total_price }} تومان</td>
+                <td class="text-center">{{ item.total_price|floatformat:"-3g"  }} تومان</td>
                 <td class="text-center"><a href="{% url 'cart:cart_remove' item.product.id %}" type="button" class="btn btn-danger">حذف</a></td> 
             </tr>
         {% empty %} 
@@ -34,7 +38,7 @@
                 <th>+</th>
                 <th> مبلغ نهایی قابل پرداخت</th>
                 <td colspan=1></td>
-                <th class="text-center">{{ cart.get_total_price }} تومان</th>
+                <th class="text-center">{{ cart.get_total_price|floatformat:"-3g"  }} تومان</th>
                 <td colspan=2><a href="{% url 'orders:order_create' %}" type="button" class="btn btn-success w-100 d-inline-block">ثبت نهایی </a></td>
             </tr>
         {% endif %}

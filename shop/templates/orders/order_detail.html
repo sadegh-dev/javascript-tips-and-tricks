@@ -20,16 +20,16 @@
                 <th>{{ forloop.counter }}</th>
                 <!-- item has info of sessions not model -->
                 <td>{{ item.product.name }}</td>
-                <td class="text-center">{{ item.price }} تومان</td>
+                <td class="text-center">{{ item.price|floatformat:"-3g"  }} تومان</td>
                 <td class="text-center">{{ item.number }}</td>
-                <td class="text-center">{{ item.get_cost }} تومان</td>
+                <td class="text-center">{{ item.get_cost|floatformat:"-3g"  }} تومان</td>
             </tr>
         {% endfor %}
             <tr class='table-success'>
                 <th>+</th>
                 <th> مبلغ نهایی قابل پرداخت</th>
                 
-                <th class="text-center">{{ order.total_price }}  تومان</th>
+                <th class="text-center">{{ order.total_price|floatformat:"-3g"  }}  تومان</th>
                 <td colspan=1>
                     {% if not order.paid %}
                     <a href=" {% url 'orders:order_delete' order.id %} " type="button" class="btn btn-danger w-100 d-inline-block">حذف سفارش</a>

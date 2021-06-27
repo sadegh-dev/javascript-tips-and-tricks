@@ -11,6 +11,7 @@
             <th scope="col"> شماره سفارش </th>
             <th scope="col" class="text-center">مبلغ سفارش</th>
             <th scope="col" class="text-center">تاریخ ثبت سفارش</th>
+            <th scope="col" class="text-center">تاریخ پرداخت</th>
             <th scope="col" class="text-center">وضعیت پرداخت</th>
             <th scope="col" class="text-center"> جزئیات</th>
         </tr>
@@ -21,8 +22,13 @@
                 <th>{{ forloop.counter }}</th>
                 <!-- item has info of sessions not model -->
                 <td>{{ order.id }}</td>
-                <td class="text-center">{{ order.total_price }} تومان</td>
+                <td class="text-center">{{ order.total_price|floatformat:"-3g"  }} تومان</td>
                 <td class="text-center">{{ order.created }}</td>
+                <td class="text-center text-success ">
+                    {% if order.paid %}
+                        {{ order.updated }}
+                    {% endif %}
+                </td>
                 <td class="text-center">
                     {% if order.paid %}
                         <a type="button" class="btn btn-success w-100 d-inline-block">پرداخت شده است</a>
@@ -30,7 +36,7 @@
                         <a type="button" class="btn btn-warning w-100 d-inline-block">عدم پرداخت</a>
                     {% endif %}
                 </td>
-                <td class="text-center"><a href="{% url 'orders:order_detail' order.id %} " type="button" class="btn btn-info w-50 d-inline-block">جزئیات</a></td>
+                <td class="text-center" ><a href="{% url 'orders:order_detail' order.id %} " type="button" class="btn btn-info w-100 d-inline-block">جزئیات</a></td>
             </tr>
         {% endfor %}
         </tbody>

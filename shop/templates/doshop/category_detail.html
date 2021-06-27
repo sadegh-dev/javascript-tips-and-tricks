@@ -17,15 +17,15 @@
                 {% endthumbnail %}
                 <!-- Product details-->
                 <div class="card-body p-4">
-                    <div class="text-center">
+                    <div class="text-center" dir='rtl' >
                         <!-- Product name-->
-                        <h5 class="fw-bolder">{{ product.name }}</h5>
+                        <h5 class="fw-bolder" >{{ product.name }}</h5>
                         <!-- Product price-->
                         {% if product.specialـprice %}
-                            <span class="text-muted text-decoration-line-through">{{ product.price }}</span>
-                            {{ product.specialـprice }}
+                            <span class="text-muted text-decoration-line-through">{{ product.price|floatformat:"-3g" }}</span>
+                            {{ product.specialـprice|floatformat:"-3g" }} تومان 
                         {% else %}
-                            {{ product.price }}
+                            {{ product.price|floatformat:"-3g" }} تومان
                         {% endif %}
                     </div>
                 </div>

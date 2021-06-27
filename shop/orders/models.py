@@ -14,7 +14,7 @@ class Order(models.Model):
         ordering = ('-created',)
 
     def __str__(self):
-        return f'{self.user} - {self.created}'
+        return f'{self.user}- {self.total_price} - {self.created}'
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())

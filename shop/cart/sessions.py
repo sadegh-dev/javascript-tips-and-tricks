@@ -39,6 +39,8 @@ class CartSessions:
         pd_id = str(product.id)
         
         if pd_id not in self.cart :
+            if product.specialـprice :
+                product.price = product.specialـprice
             self.cart[pd_id] = {'number' : number, 'price':str(product.price)}
         else :
             self.cart[pd_id]['number'] += number

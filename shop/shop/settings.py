@@ -38,10 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
+
     'doshop.apps.DoshopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+
     'zarinpal.apps.ZarinpalConfig',
+
     'sorl.thumbnail',
 ]
 
@@ -154,4 +157,7 @@ EMAIL_HOST_PASSWORD = 'password'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Online-shop <onlineshop@gmail.com> '
+
+
+
 
