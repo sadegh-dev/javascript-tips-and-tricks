@@ -1,5 +1,7 @@
+from django.core import paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Category, Product, Company
 from orders.models import Order
@@ -10,8 +12,14 @@ def home(request) :
     products = Product.objects.filter(available=True)
     categories = Category.objects.all()
     companies = Company.objects.all()
+
+    #pagination
+    paginator = Paginator(products, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'products' : products ,
+        'products' : page_obj ,
         'categories' : categories,
         'companies' : companies ,
     }
@@ -35,9 +43,17 @@ def product_detail(request, slug):
 
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
+    products = Product.objects.filter(available=True, category=category)
     categories = Category.objects.all()
     companies = Company.objects.all()
+
+    #pagination
+    paginator = Paginator(products, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
+        'products':page_obj,
         'category' : category ,
         'categories' : categories ,
         'companies' : companies
@@ -47,9 +63,17 @@ def category_detail(request, slug):
 
 def company_detail(request, slug):
     company = get_object_or_404(Company, slug=slug)
+    products = Product.objects.filter(available=True, company=company)
     categories = Category.objects.all()
     companies = Company.objects.all()
+
+    #pagination
+    paginator = Paginator(products, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
+        'products':page_obj,
         'company' : company ,
         'companies' : companies ,
         'categories' : categories
@@ -61,8 +85,14 @@ def all_specialـprice(request) :
     products = Product.objects.filter(available=True, specialـprice__isnull=False)
     categories = Category.objects.all()
     companies = Company.objects.all()
+
+    #pagination
+    paginator = Paginator(products, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'products' : products ,
+        'products' : page_obj ,
         'categories' : categories,
         'companies' : companies ,
     }
@@ -187,8 +217,14 @@ def not_available_products(request):
 def all_order_list(request):
     if request.user.access_level == 'o' :
         orders = Order.objects.all()
+
+        #pagination
+        paginator = Paginator(orders, 20)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         context = {
-            'orders' : orders,
+            'orders' : page_obj,
         }
         return render(request, 'accounts/manager/all_order_list.html' , context)
     else :
