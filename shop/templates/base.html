@@ -15,14 +15,14 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     </head>
-    <body> 
+    <body dir='rtl'> 
         {% include 'lib/navbar.html' %}
         {% include 'lib/messages.html' %}
         {% include 'lib/header.html' %}
         <!-- Section-->
         <section class="py-5">
-                <div class="container px-4 px-lg-5 mt-5">
-                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <div class="container px-4 px-lg-5 mt-5">                   
+                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">                      
                         {% block content %}
                             <p>  موردی یافت نشد :(</p>
                         {% endblock %}
