@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Category, Product, Company
 from cart.forms import CartAddForm
-from .forms import InsertProductForm, EditProductForm, EditPriceProductForm
+from .forms import InsertProductForm, EditProductForm, EditPriceProductForm, EditAvailableProductForm
 
 def home(request) :
     products = Product.objects.filter(available=True)
@@ -142,6 +142,32 @@ def edit_price_product(request, slug):
     else :
         return redirect('doshop:home')
 
+
+
+@login_required
+def edit_available_product(request, slug):
+    if request.user.access_level == 'o' :
+        the_product = get_object_or_404(Product, slug=slug)
+        if request.method=='POST':
+            form = EditAvailableProductForm(request.POST, instance=the_product)
+            if form.is_valid():
+                form.save()
+                available = form.cleaned_data['available']
+                if available :  
+                    messages.success(request,'کالا با وضعیت فعال باقی ماند','success')
+                    return redirect('doshop:product-detail', slug )
+                else :
+                    messages.success(request,'وضعیت کالا به وضعیت غیرفعال تبدیل شد','success')
+                    return redirect('doshop:home')
+        else :
+            form = EditAvailableProductForm(instance=the_product)
+        context = {
+            'product': the_product,
+            'form' : form ,
+        }
+        return render(request,'accounts/manager/edit_available_product.html',context)
+    else :
+        return redirect('doshop:home')
 
 
 

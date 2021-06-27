@@ -122,7 +122,13 @@ class EditPriceProductForm(forms.ModelForm):
             },
         }
 
-
+class EditAvailableProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields =('available',)
+        labels = {
+            'price' : 'وضعیت',
+        }
 
 
 
