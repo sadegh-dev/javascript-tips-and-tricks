@@ -10,6 +10,7 @@
             {% if user.is_authenticated %}
                 <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_profile' %}">پروفایل</a></div>
                 <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'doshop:insert_product' %}">ثبت کالای جدید</a></div>
+                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'doshop:not_available_products' %}">کالاهای غیرفعال</a></div>
                 <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_logout' %}">خروج</a></div>
               {% endif %}
               

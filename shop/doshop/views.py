@@ -18,7 +18,7 @@ def home(request) :
 
 
 def product_detail(request, slug):
-    product = get_object_or_404(Product, slug=slug)
+    product = get_object_or_404(Product, slug=slug, available=True)
     categories = Category.objects.all()
     companies = Company.objects.all()
     form = CartAddForm()
@@ -154,7 +154,7 @@ def edit_available_product(request, slug):
                 form.save()
                 available = form.cleaned_data['available']
                 if available :  
-                    messages.success(request,'کالا با وضعیت فعال باقی ماند','success')
+                    messages.success(request,'وضعیت کالا فعال است','success')
                     return redirect('doshop:product-detail', slug )
                 else :
                     messages.success(request,'وضعیت کالا به وضعیت غیرفعال تبدیل شد','success')
@@ -170,7 +170,12 @@ def edit_available_product(request, slug):
         return redirect('doshop:home')
 
 
-
+def not_available_products(request):
+    products = Product.objects.filter(available=False)
+    context = {
+        'products' : products ,
+    }
+    return render(request,'accounts/manager/not_available_products.html', context)
 
 
 
