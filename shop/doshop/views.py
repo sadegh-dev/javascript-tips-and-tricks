@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Category, Product, Company
 from cart.forms import CartAddForm
-from .forms import InsertProductForm
+from .forms import InsertProductForm, EditProductForm, EditPriceProductForm
 
 def home(request) :
     products = Product.objects.filter(available=True)
@@ -79,7 +79,7 @@ def page_not_found(request):
 
 
 
-# ---- Manager --------- # 
+# ----------- Manager ------------------- # 
 @login_required
 def insert_product(request):
     if request.user.access_level == 'o' :
@@ -105,18 +105,40 @@ def edit_product(request, slug):
     if request.user.access_level == 'o' :
         the_product = get_object_or_404(Product, slug=slug)
         if request.method=='POST':
-            form = InsertProductForm(request.POST, request.FILES, instance=the_product)
+            form = EditProductForm(request.POST, request.FILES, instance=the_product)
             if form.is_valid():
                 slug = form.cleaned_data['slug']
                 form.save()
                 messages.success(request,'ویرایش مشخصات کالا با موفقیت انجام شد','success')
                 return redirect('doshop:product-detail', slug )
         else :
-            form = InsertProductForm(instance=the_product)
+            form = EditProductForm(instance=the_product)
         context = {
             'form' : form ,
         }
         return render(request,'accounts/manager/edit_product.html',context)
+    else :
+        return redirect('doshop:home')
+
+
+
+@login_required
+def edit_price_product(request, slug):
+    if request.user.access_level == 'o' :
+        the_product = get_object_or_404(Product, slug=slug)
+        if request.method=='POST':
+            form = EditPriceProductForm(request.POST, instance=the_product)
+            if form.is_valid():
+                form.save()
+                messages.success(request,'تغییر قیمت کالا با موفقیت انجام شد','success')
+                return redirect('doshop:product-detail', slug )
+        else :
+            form = EditPriceProductForm(instance=the_product)
+        context = {
+            'product': the_product,
+            'form' : form ,
+        }
+        return render(request,'accounts/manager/edit_price_product.html',context)
     else :
         return redirect('doshop:home')
 
@@ -128,4 +150,4 @@ def edit_product(request, slug):
 
 
 
-# ---- EndManager ------ #
+# ---------- EndManager --------------------- #

@@ -23,7 +23,7 @@
             {% if user.access_level == 'o' %}
             <div class="btn-group" role="group" aria-label="Basic outlined example">
                 <a href="{% url 'doshop:edit_product'  product.slug  %}" type="button" class="btn btn-outline-primary">ویرایش اطلاعات کالا</a>
-                <a href="{% url 'doshop:edit_product'  product.slug  %}" type="button" class="btn btn-outline-primary">تغییر قیمت کالا</a>
+                <a href="{% url 'doshop:edit_price_product'  product.slug  %}" type="button" class="btn btn-outline-primary">تغییر قیمت کالا</a>
                 <a href="{% url 'doshop:edit_product'  product.slug  %}" type="button" class="btn btn-outline-primary"> غیر فعال کردن کالا</a>
               </div>
             {% endif %}

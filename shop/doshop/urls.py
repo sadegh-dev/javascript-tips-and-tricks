@@ -11,6 +11,7 @@ urlpatterns = [
     #----- manager------------#
     path('insert-product/',views.insert_product, name='insert_product'),
     path('edit-product/<slug:slug>/',views.edit_product, name='edit_product'),
+    path('edit-price-product/<slug:slug>/',views.edit_price_product, name='edit_price_product'),
     #------End manager -------#
     path('',views.home, name='home'),
     
