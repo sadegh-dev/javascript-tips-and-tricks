@@ -8,13 +8,13 @@
                 <li class="nav-item"><a class="nav-link active" href="{% url 'doshop:home' %}">صفحه اصلی</a></li>                  
               </ul>
             {% if user.is_authenticated %}
-                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_profile' request.user.id %}">پروفایل</a></div>
+                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_profile' %}">پروفایل</a></div>
                 <div class="btn btn-secondary mx-1"><a class="text-white me-1" style='text-decoration:none' href="{% url 'cart:cart_detail' %}">
                   <i class="bi-cart-fill me-1"></i>
                         سبد خرید
                 </a></div>
-                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_change_pass' request.user.id %}">تغییر رمز عبور</a></div>
-                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_edit' request.user.id %}">ویرایش مشخصات کاربری</a></div>
+                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_change_pass' %}">تغییر رمز عبور</a></div>
+                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_edit' %}">ویرایش مشخصات کاربری</a></div>
                 <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'orders:order_list' %}">سفارشات ثبت شده</a></div>
                 <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_logout' %}">خروج</a></div>
               {% else %}

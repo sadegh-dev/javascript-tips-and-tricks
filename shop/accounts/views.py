@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from .forms import UserCreationForm, UserLoginForm, UserEdit, UserChangePassForm
+from .forms import UserLoginForm, UserRegisterForm, UserChangeForm, UserChangePassForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import User
@@ -10,38 +10,38 @@ from django.contrib.auth import views as auth_views
 
 def user_register(request):
     if request.method == 'POST' :
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
-            the_email = form.cleaned_data['email']
-            the_full_name = form.cleaned_data['full_name']
-            the_password = form.cleaned_data['password1']
-            user = User.objects.create_user(the_email, the_password, the_full_name)
+            cd = form.cleaned_data
+            user = User.objects.create_user( cd['email'], cd['password1'], cd['full_name'], cd['national_code'], cd['mobile'], cd['address'] )
             user.save()
-            login(request,user)
-            messages.success(request, 'ثبت نام شما با موفقیت انجام شد','success')
-            return redirect('doshop:home')
+            login(request, user)
+            messages.success(request,'ثبت نام با موفقیت انجام شد','success')
+            return redirect('accounts:dashboard')
     else :
-        form = UserCreationForm()
+        form = UserRegisterForm()
     context = {
-        'form' : form ,
+        'form' : form
     }
     return render(request,'accounts/register.html',context)
 
 
 
 def user_login(request):
+    next = request.GET.get('next')
     if request.method == 'POST' :
         form = UserLoginForm(request.POST)
-        if form.is_valid() :
-            the_email = form.cleaned_data['email']
-            the_password = form.cleaned_data['password']
-            user = authenticate(request, email=the_email, password=the_password)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request, email=cd['email'], password=cd['password'])
             if user is not None :
-                login(request,user)
-                messages.success(request,'شما با موفقیت وارد شدید','success')
-                return redirect('doshop:home')
+                login(request, user)
+                messages.success(request,'ورود با موفقیت انجام شد','success')
+                if next :
+                    return redirect(next)
+                return redirect('accounts:dashboard')
             else :
-                messages.error(request,'ایمیل یا رمز عبور ورودی صحیحی نمی باشد','danger')
+                messages.success(request,'ایمیل یا رمز عبور صحیح نمی باشد','danger')
     else :
         form = UserLoginForm()
     context = {
@@ -60,61 +60,53 @@ def user_logout(request):
 
 
 @login_required
-def user_edit(request, user_id):
-    the_user = get_object_or_404(User, id = user_id)
-    if the_user.id == request.user.id:
-        if request.method == 'POST' :
-            print("post is run")
-            form = UserEdit(request.POST, instance=the_user)
-            if form.is_valid():
-                fm = form.save(commit=False)
-                fm.full_name = form.cleaned_data['full_name']
-                fm.email = form.cleaned_data['email']
-                fm.save()
-                messages.success(request, 'ویرایش با موفقیت انجام شد', 'success')
-                return redirect('accounts:user_profile', request.user.id)
-                #return redirect('account:dashboard',user_id)
-        else:
-            form = UserEdit(instance = the_user)
-        context = {'form': form}
-        return render(request,'accounts/user_edit.html', context)
-    else:
-        return redirect('doshop:home')
+def user_edit(request):
+    myid = request.user.id
+    me = get_object_or_404(User, id = myid)
+    if request.method =='POST':
+        form = UserChangeForm(request.POST, instance=me)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'ویرایش مشخصات با موفقیت انجام شد','success')
+            return redirect('accounts:dashboard')
+    else :
+        form = UserChangeForm(instance=me)
+    context = {
+        'form' : form
+    }
+    return redirect('doshop:home')
 
 
 
 @login_required
-def user_profile(request, user_id):
+def user_profile(request):
+    user_id = request.user.id
     the_user = get_object_or_404(User, id = user_id)
-    if the_user.id == request.user.id:
-        context = {
-            'the_user' : the_user
-        }
-        return render(request,'accounts/user_profile.html', context)
-    else:
-        return redirect('doshop:home')
+    context = {
+        'the_user' : the_user
+    }
+    return render(request,'accounts/user_profile.html', context)
+
     
 
 
 @login_required
-def user_change_pass(request, user_id):
+def user_change_pass(request):
+    user_id = reques.user.id
     the_user = get_object_or_404(User, id = user_id)
-    if the_user.id == request.user.id:
-        if request.method == 'POST' :
-            form = UserChangePassForm(request.POST, instance=the_user)
-            if form.is_valid():
-                fm = form.save(commit=False)
-                fm.password1 = form.cleaned_data['password1']
-                fm.save()
-                login(request,the_user)
-                messages.success(request, 'رمز عبور با موفقیت تغییر کرد', 'success')
-                return redirect('accounts:user_profile', request.user.id)
-        else:
-            form = UserChangePassForm(instance = the_user)
-        context = {'form': form}
-        return render(request,'accounts/user_change_pass.html', context)
+    if request.method == 'POST' :
+        form = UserChangePassForm(request.POST, instance=the_user)
+        if form.is_valid():
+            fm = form.save(commit=False)
+            fm.password1 = form.cleaned_data['password1']
+            fm.save()
+            login(request,the_user)
+            messages.success(request, 'رمز عبور با موفقیت تغییر کرد', 'success')
+            return redirect('accounts:user_profile')
     else:
-        return redirect('doshop:home')
+        form = UserChangePassForm(instance = the_user)
+    context = {'form': form}
+    return render(request,'accounts/user_change_pass.html', context)
 
 
 
