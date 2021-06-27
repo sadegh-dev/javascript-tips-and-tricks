@@ -23,7 +23,7 @@
                         <!-- Product price-->
                         {% if product.specialـprice %}
                             <span class="text-muted text-decoration-line-through">{{ product.price|floatformat:"-3g" }}</span>
-                            {{ product.specialـprice|floatformat:"-3g" }} تومان 
+                            <span class="text-danger ">{{ product.specialـprice|floatformat:"-3g" }} </span>  تومان
                         {% else %}
                             {{ product.price|floatformat:"-3g" }} تومان
                         {% endif %}

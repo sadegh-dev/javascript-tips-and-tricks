@@ -21,7 +21,11 @@
             </p>
 
             {% if user.access_level == 'o' %}
-            <a href="{% url 'doshop:edit_product'  product.slug  %}" type="button" class="btn btn-danger col-5">ویرایش اطلاعات کالا</a>
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <a href="{% url 'doshop:edit_product'  product.slug  %}" type="button" class="btn btn-outline-primary">ویرایش اطلاعات کالا</a>
+                <a href="{% url 'doshop:edit_product'  product.slug  %}" type="button" class="btn btn-outline-primary">تغییر قیمت کالا</a>
+                <a href="{% url 'doshop:edit_product'  product.slug  %}" type="button" class="btn btn-outline-primary"> غیر فعال کردن کالا</a>
+              </div>
             {% endif %}
             
             <!-- Product details-->
@@ -32,7 +36,7 @@
                     <!-- Product price-->
                     {% if product.specialـprice %}
                         <span class="text-muted text-decoration-line-through">{{ product.price|floatformat:"-3g" }}</span>
-                        {{ product.specialـprice|floatformat:"-3g" }} تومان
+                        <span class="text-danger ">{{ product.specialـprice|floatformat:"-3g" }} </span>  تومان
                     {% else %}
                         {{ product.price|floatformat:"-3g" }} تومان
                     {% endif %}
@@ -44,7 +48,7 @@
             <form action='{% url "cart:cart_add" product.id %}' method='POST'>
                 {% csrf_token %}
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div dir='rtl' class="text-center">{{ form.as_p }}</div>
+                    <div class="text-center ">{{ form.as_p }}</div>
                 </div>
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div class="text-center"><input type='submit' class="btn btn-outline-dark mt-auto" value="اضافه به سبد خرید"></div>

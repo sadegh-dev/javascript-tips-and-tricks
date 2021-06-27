@@ -57,7 +57,7 @@ def company_detail(request, slug):
 
 
 def all_specialـprice(request) :
-    products = Product.objects.filter(specialـprice__isnull=False)
+    products = Product.objects.filter(available=True, specialـprice__isnull=False)
     categories = Category.objects.all()
     companies = Company.objects.all()
     context = {
@@ -107,6 +107,7 @@ def edit_product(request, slug):
         if request.method=='POST':
             form = InsertProductForm(request.POST, request.FILES, instance=the_product)
             if form.is_valid():
+                slug = form.cleaned_data['slug']
                 form.save()
                 messages.success(request,'ویرایش مشخصات کالا با موفقیت انجام شد','success')
                 return redirect('doshop:product-detail', slug )
