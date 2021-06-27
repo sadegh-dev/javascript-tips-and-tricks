@@ -8,7 +8,7 @@ from django.contrib import messages
 @login_required
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    if order.user.id == request.user.id :
+    if order.user.id == request.user.id or request.user.access_level == 'o':
 
         # session for order
         request.session['id_pay'] = order.id

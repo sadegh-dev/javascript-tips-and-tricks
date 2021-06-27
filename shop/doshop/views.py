@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Category, Product, Company
+from orders.models import Order
 from cart.forms import CartAddForm
 from .forms import InsertProductForm, EditProductForm, EditPriceProductForm, EditAvailableProductForm
 
@@ -170,15 +171,27 @@ def edit_available_product(request, slug):
         return redirect('doshop:home')
 
 
+
 def not_available_products(request):
-    products = Product.objects.filter(available=False)
-    context = {
-        'products' : products ,
-    }
-    return render(request,'accounts/manager/not_available_products.html', context)
+    if request.user.access_level == 'o' :
+        products = Product.objects.filter(available=False)
+        context = {
+            'products' : products ,
+        }
+        return render(request,'accounts/manager/not_available_products.html', context)
+    else :
+        return redirect('doshop:home')
 
 
 
-
+def all_order_list(request):
+    if request.user.access_level == 'o' :
+        orders = Order.objects.all()
+        context = {
+            'orders' : orders,
+        }
+        return render(request, 'accounts/manager/all_order_list.html' , context)
+    else :
+        return redirect('doshop:home')
 
 # ---------- EndManager --------------------- #

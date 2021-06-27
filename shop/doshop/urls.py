@@ -14,6 +14,7 @@ urlpatterns = [
     path('edit-price-product/<slug:slug>/',views.edit_price_product, name='edit_price_product'),
     path('edit-available-product/<slug:slug>/',views.edit_available_product, name='edit_available_product'),
     path('not-available-products/',views.not_available_products, name='not_available_products'),
+    path('all-order-list/',views.all_order_list, name='all_order_list'),
     #------End manager -------#
     path('',views.home, name='home'),
     
