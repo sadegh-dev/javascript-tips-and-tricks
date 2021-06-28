@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from accounts.models import User
 from doshop.models import Category, Company, Product
-from orders.models import Order
+from orders.models import OrderItem
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -35,4 +35,9 @@ class ProductsOFCategorySerializer(serializers.ModelSerializer):
     """
 
 
-    
+class MyItemOrdersSerializer(serializers.ModelSerializer):
+    product = serializers.StringRelatedField()
+    class Meta :
+        model = OrderItem
+        fields = ('product', 'number', 'price')
+

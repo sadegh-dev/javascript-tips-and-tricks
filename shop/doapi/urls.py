@@ -11,5 +11,6 @@ urlpatterns = [
     path('special-price-products/',views.special_price_products), 
     path('category-products/<slug:slug>/',views.category_products),
     path('get-token/', views.get_token, name='get_token'),
+    path('my-orders/', views.my_orders, name='my_orders'),
 
 ]

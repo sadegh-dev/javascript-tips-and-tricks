@@ -1,16 +1,18 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 
 from accounts.models import User
 from doshop.models import Category, Company, Product
-from orders.models import Order
+from orders.models import OrderItem
 
 from .forms import UserApiForm
 
-from .serializers import CategorySerializer, CompanySerializer, specialPriceProductsSerializer, ProductsOFCategorySerializer
+from .serializers import CategorySerializer, CompanySerializer, specialPriceProductsSerializer, ProductsOFCategorySerializer, MyItemOrdersSerializer
 
 
 
@@ -71,3 +73,14 @@ def get_token(request):
     }
     return render(request,'doapi/get_token.html',context)
 
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated,])
+def my_orders(request):
+    user = request.user
+    item_orders = OrderItem.objects.filter(order__user=user)
+    ser_data = MyItemOrdersSerializer(item_orders, many=True)
+    return Response(ser_data.data)
+
+#MyOrdersSerializer
