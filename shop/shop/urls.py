@@ -23,6 +23,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('cart/', include('cart.urls', namespace='cart')),
     path('odrers/', include('orders.urls', namespace='orders')),
+    path('api/', include('doapi.urls', namespace='doapi')),
     path('zarinpal/', include('zarinpal.urls', namespace='zarinpal')),
     path('', include('doshop.urls', namespace='doshop')),
 

@@ -42,10 +42,12 @@ INSTALLED_APPS = [
     'doshop.apps.DoshopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'doapi.apps.DoapiConfig',
 
     'zarinpal.apps.ZarinpalConfig',
 
     'sorl.thumbnail',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

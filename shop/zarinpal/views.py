@@ -4,7 +4,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from zeep import Client
+#from zeep import Client
 from orders.models import Order
 from django.contrib import messages
 
