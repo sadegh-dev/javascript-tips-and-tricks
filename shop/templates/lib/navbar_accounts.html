@@ -13,6 +13,7 @@
                   <div class="btn mx-1 bg-danger"><a class="text-white me-1" style='text-decoration:none' href="{% url 'doshop:insert_product' %}">مدیریت</a></div>
                 {% endif %}
                 <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_change_pass' %}">تغییر رمز عبور</a></div>
+                <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'doapi:get_token' %}">دریافت توکن api</a></div>
                 <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'accounts:user_edit' %}">ویرایش مشخصات</a></div>
                 <div class="btn mx-1"><a class="text-dark me-1" style='text-decoration:none' href="{% url 'orders:order_list' %}">سفارشات ثبت شده</a></div>
                 <div class="btn btn-secondary mx-1"><a class="text-white me-1" style='text-decoration:none' href="{% url 'cart:cart_detail' %}">

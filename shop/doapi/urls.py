@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 app_name = 'doapi'
 urlpatterns = [
     path('test-connect/',views.test_connect),
@@ -9,4 +10,6 @@ urlpatterns = [
     path('all-companies/',views.companies), 
     path('special-price-products/',views.special_price_products), 
     path('category-products/<slug:slug>/',views.category_products),
+    path('get-token/', views.get_token, name='get_token'),
+
 ]

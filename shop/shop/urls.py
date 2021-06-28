@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +26,9 @@ urlpatterns = [
     path('odrers/', include('orders.urls', namespace='orders')),
     path('api/', include('doapi.urls', namespace='doapi')),
     path('zarinpal/', include('zarinpal.urls', namespace='zarinpal')),
+    path('api-token-auth/',obtain_auth_token, name='mytoken'),
     path('', include('doshop.urls', namespace='doshop')),
 
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)  
+
+# my b561b0532400ec4e371919df96da4c02ac33a609
