@@ -193,14 +193,20 @@ class UserChangeForm(forms.ModelForm):
 
 
 class UserChangePassForm(forms.ModelForm):
+    current_password = forms.CharField(
+        label = 'رمز عبور فعلی',
+        widget = forms.PasswordInput(attrs={
+            'class' :'form-control bg-light' ,
+        })
+    )
     password1 = forms.CharField(
-        label = 'رمز عبور',
+        label = 'رمز عبور جدید',
         widget = forms.PasswordInput(attrs={
             'class' :'form-control bg-light' ,
         })
     )
     password2 = forms.CharField(
-        label = 'تکرار رمز عبور',
+        label = 'تکرار رمز عبور جدید',
         widget = forms.PasswordInput(attrs={
             'class' :'form-control bg-light' ,
         })

@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 
+#reCaptcha
 import urllib
 import json
 from shop import settings
@@ -124,7 +125,6 @@ def user_login(request):
     return render (request,'accounts/login.html',context)
 """
 
-
 @login_required
 def user_logout(request):
     logout(request)
@@ -171,16 +171,78 @@ def user_change_pass(request):
     if request.method == 'POST' :
         form = UserChangePassForm(request.POST, instance=the_user)
         if form.is_valid():
-            fm = form.save(commit=False)
-            fm.password1 = form.cleaned_data['password1']
-            fm.save()
-            login(request,the_user)
-            messages.success(request, 'رمز عبور با موفقیت تغییر کرد', 'success')
-            return redirect('accounts:user_profile')
+            ## CAPTCHA ##########################
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response' : recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode()
+            req =  urllib.request.Request(url, data=data)
+            response = urllib.request.urlopen(req)
+            result = json.loads(response.read().decode())
+            ## CAPTCHA ######################
+            if result['success']:
+                cp = form.cleaned_data['current_password']
+                em = request.user.email
+                user = authenticate(request, email=em, password=cp)
+                if user is not None :
+                    fm = form.save(commit=False)
+                    fm.password1 = form.cleaned_data['password1']
+                    fm.save()
+                    login(request,the_user)
+                    messages.success(request, 'رمز عبور با موفقیت تغییر کرد', 'success')
+                    return redirect('accounts:user_profile')
+                else :
+                    messages.error(request,'رمز عبور فعلی خود را اشتباه وارد کرده اید','danger')
+            else:
+                messages.error(request,'لطفا گزینه من ربات نیستم را ثبت نمایید','danger')
     else:
         form = UserChangePassForm(instance = the_user)
     context = {'form': form}
     return render(request,'accounts/user_change_pass.html', context)
+
+
+"""
+@login_required
+def user_change_pass(request):
+    user_id = request.user.id
+    the_user = get_object_or_404(User, id = user_id)
+    if request.method == 'POST' :
+        form = UserChangePassForm(request.POST, instance=the_user)
+        if form.is_valid():
+            ## CAPTCHA ##########################
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response' : recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode()
+            req =  urllib.request.Request(url, data=data)
+            response = urllib.request.urlopen(req)
+            result = json.loads(response.read().decode())
+            ## CAPTCHA ######################
+            if result['success']:
+                fm = form.save(commit=False)
+                fm.password1 = form.cleaned_data['password1']
+                fm.save()
+                login(request,the_user)
+                messages.success(request, 'رمز عبور با موفقیت تغییر کرد', 'success')
+                return redirect('accounts:user_profile')
+            else:
+                messages.error(request,'لطفا گزینه من ربات نیستم را ثبت نمایید','danger')
+    else:
+        form = UserChangePassForm(instance = the_user)
+    context = {'form': form}
+    return render(request,'accounts/user_change_pass.html', context)
+
+"""
+
+def list_api(request):
+    return render(request,'accounts/list_api.html')
+
 
 
 

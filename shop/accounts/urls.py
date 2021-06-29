@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout/',views.user_logout, name='user_logout'),
     path('user-edit/', views.user_edit, name="user_edit"),
     path('profile/', views.user_profile, name='user_profile'),
+    path('list-api/', views.list_api, name='list_api'),
     path('user-change-pass/', views.user_change_pass, name='user_change_pass'),
     #reset password
     path('reset/', views.UserPassReset.as_view(), name='reset_pass'),

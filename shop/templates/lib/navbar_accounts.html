@@ -30,15 +30,14 @@
               <a class="nav-link text-dark" href="{% url 'doapi:get_token' %}">دریافت توکن api</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link text-dark" href="{% url 'accounts:list_api' %}">api های کاربردی</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link text-dark" href="{% url 'accounts:user_edit' %}">ویرایش مشخصات</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-dark" href="{% url 'orders:order_list' %}">سفارشات ثبت شده</a>
             </li>
-            <div class="btn btn-secondary mx-1"><a class="text-white me-1" style='text-decoration:none' href="{% url 'cart:cart_detail' %}">
-              <i class="bi-cart-fill me-1"></i>
-                    سبد خرید
-            </a></div>
             <li class="nav-item">
               <a class="nav-link text-dark" href="{% url 'doshop:home' %}">بازگشت</a>
             </li>
