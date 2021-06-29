@@ -7,7 +7,43 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 
+import urllib
+import json
+from shop import settings
 
+def user_register(request):
+    if request.method == 'POST' :
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            ## CAPTCHA ##########################
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response' : recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode()
+            req =  urllib.request.Request(url, data=data)
+            response = urllib.request.urlopen(req)
+            result = json.loads(response.read().decode())
+            ## CAPTCHA ######################
+            if result['success']:
+                cd = form.cleaned_data
+                user = User.objects.create_user( cd['email'], cd['password1'], cd['full_name'], cd['national_code'], cd['mobile'], cd['address'] )
+                user.save()
+                login(request, user)
+                messages.success(request,'ثبت نام با موفقیت انجام شد','success')
+                return redirect('doshop:home')         
+            else:
+                messages.error(request,'لطفا گزینه من ربات نیستم را ثبت نمایید','danger')
+    else :
+        form = UserRegisterForm()
+    context = {
+        'form' : form
+    }
+    return render(request,'accounts/register.html',context)
+
+"""
 def user_register(request):
     if request.method == 'POST' :
         form = UserRegisterForm(request.POST)
@@ -25,8 +61,46 @@ def user_register(request):
     }
     return render(request,'accounts/register.html',context)
 
+"""
 
+def user_login(request):
+    next = request.GET.get('next')
+    if request.method == 'POST' :
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            ## CAPTCHA ##########################
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response' : recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode()
+            req =  urllib.request.Request(url, data=data)
+            response = urllib.request.urlopen(req)
+            result = json.loads(response.read().decode())
+            ## CAPTCHA ######################
+            if result['success']:
+                cd = form.cleaned_data
+                user = authenticate(request, email=cd['email'], password=cd['password'])
+                if user is not None :
+                    login(request, user)
+                    messages.success(request,'ورود با موفقیت انجام شد','success')
+                    if next :
+                        return redirect(next)
+                    return redirect('doshop:home')
+                else :
+                    messages.success(request,'ایمیل یا رمز عبور صحیح نمی باشد','danger')
+            else:
+                messages.error(request,'لطفا گزینه من ربات نیستم را ثبت نمایید','danger')
+    else :
+        form = UserLoginForm()
+    context = {
+        'form' : form
+    }
+    return render (request,'accounts/login.html',context)
 
+"""
 def user_login(request):
     next = request.GET.get('next')
     if request.method == 'POST' :
@@ -48,7 +122,7 @@ def user_login(request):
         'form' : form
     }
     return render (request,'accounts/login.html',context)
-
+"""
 
 
 @login_required

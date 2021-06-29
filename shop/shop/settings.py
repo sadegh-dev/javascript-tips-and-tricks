@@ -93,14 +93,6 @@ DATABASES = {
 }
 
 
-# Dajango REST FRAMEWORK
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES' : [
-        'rest_framework.authentication.TokenAuthentication',
-    ]
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -160,7 +152,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Send Email (Gmail)
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'myemail.gmail.com'
@@ -170,5 +161,12 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Online-shop <onlineshop@gmail.com> '
 
 
+# Dajango REST FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
-
+# Google reCAPTCHA
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LdCh2EbAAAAADoMAvlfLoAfiUeE6Vvsa3GulkLY'
